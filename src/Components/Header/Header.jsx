@@ -25,7 +25,7 @@ function Header() {
   return (
     <header className="text-gray-600 body-font bg-pink-100 ">
       <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <Link to={"/"} className="flex title-font cursor-poiter font-medium items-center text-gray-900 mb-4 md:mb-0">
+        <Link to={"/Proyecto-5-Ecomers/"} className="flex title-font cursor-poiter font-medium items-center text-gray-900 mb-4 md:mb-0">
           
           <span className="ml-3 text-2xl">El Baul</span>
         </Link>
