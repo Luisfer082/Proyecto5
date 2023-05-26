@@ -16,6 +16,8 @@ function cart() {
       <div>
         <div>
             <h4 className="text-5xl text-center mt-8 ">Carrito</h4>
+            <h4 className="text-5xl text-center mt-8 ">Añade algo </h4>
+
         </div>
         {
           carts?.map(cart =>{
