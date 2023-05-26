@@ -1,0 +1,90 @@
+import React, { useEffect, useState } from "react";
+import { redirect, useParams } from "react-router-dom";
+
+function Products() {
+  const { id } = useParams();
+  const [product,setProduct] = useState({})
+
+  useEffect(() =>{
+    const fetchProduct = async () =>{
+        const response = await fetch(`https://fakestoreapi.com/products/${id}`)
+        const data = await response.json()
+        setProduct(data)
+    }
+    fetchProduct()
+
+  }, [])
+
+  const handleCart = (product, redirect) =>{
+    console.log(product)
+    alert("se añadio a carrito")
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const isProductExist = cart.find(item => item.id ===product.id)
+    if(isProductExist) {
+      const updateCard = cart.map(item => {
+        if(item.id === product.id){
+          return{
+            ...item,
+            quantity: item.quantity + 1
+          }
+        }
+        return item
+      })
+      localStorage.setItem('cart', JSON.stringify(updateCard))
+    } else {
+      localStorage.setItem('cart', JSON.stringify([...cart, {...product,quantity: 1}]))
+    }
+    if( redirect){
+    }
+  
+
+  }
+
+
+
+  return (
+    <section className="text-gray-600 body-font overflow-hidden">
+      <div className="container px-5 py-24 mx-auto">
+        <div className="lg:w-4/5 mx-auto flex flex-wrap">
+          <div className="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+            <h2 className="text-sm title-font text-gray-500 tracking-widest">
+              {product?.category}
+            </h2>
+            <h1 className="text-gray-900 text-3xl title-font font-medium mb-4">
+              {product?.title}
+            </h1>
+            <div className="flex mb-4">
+              <a className="flex-grow text-purple-500 border-b-2 border-purple-500 py-2 text-lg px-1">
+                Description
+              </a>
+              <a className="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                Reviews
+              </a>
+              <a className="flex-grow border-b-2 border-gray-300 py-2 text-lg px-1">
+                Details
+              </a>
+            </div>
+            <p className="leading-relaxed mb-4">
+              {product?.description}
+            </p>
+            <div className="flex">
+              <span className="title-font font-medium text-2xl text-gray-900">
+                {product?.price}
+              </span>
+              <button onClick={() => handleCart(product)} className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded">
+                Agregar a carrito
+              </button>
+            </div>
+          </div>
+          <img
+            alt="ecommerce"
+            className="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+            src={product.image}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default Products;
